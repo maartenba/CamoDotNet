@@ -1,5 +1,7 @@
 # CamoDotNet
 
+[![camodotnet MyGet Build Status](https://www.myget.org/BuildSource/Badge/camodotnet?identifier=c16999ce-becd-4496-b70b-0c54e3e8eabb)](https://www.myget.org/)
+
 CamoDotNet is a .NET port of [camo](https://github.com/atmos/camo). It is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages.
 
 [Check the GitHub blog](https://github.com/blog/743-sidejack-prevention-phase-3-ssl-proxied-assets) for background on why camo exists.
@@ -67,13 +69,6 @@ The `CamoDotNet.Sample` project contains a minimal sample  that renders an image
 ## Configuration
 
 CamoDotNet comes with several configuration options which can be specified as a parameter to the CamoDotNet server.
-
-        private const string DefaultUserAgent = "CamoDotNet Asset Proxy/1.0.0";
-
-        public HMAC SharedKey { get; private set; }
-        public string UserAgent { get; set; }
-        public int ContentLengthLimit { get; private set; }
-
 
 * `SharedKey`: The shared key used to generate the HMAC digest.
 * `UserAgent`: The string for Camo to include in the `Via` and `User-Agent` headers it sends in requests to origin servers. (default: `CamoDotNet Asset Proxy/1.0`)
