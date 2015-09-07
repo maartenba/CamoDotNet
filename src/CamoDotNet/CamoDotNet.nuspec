@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://github.com/maartenba/CamoDotNet</licenseUrl>
+    <projectUrl>http://github.com/maartenba/CamoDotNet</projectUrl>
+    <id>$id$</id>
+    <title>$title$</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains server-side code.</description>
+    <summary>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains server-side code.</summary>
+    <copyright>Copyright 2016 Maarten Balliauw</copyright>
+    <tags>CamoDotNet https ssl image proxy</tags>
+    <dependencies>
+      <dependency id="CamoDotNet.Core" version="$version$" />
+    </dependencies>
+  </metadata>
+</package>
