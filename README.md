@@ -8,7 +8,10 @@ CamoDotNet is a .NET port of [camo](https://github.com/atmos/camo). It is all ab
 
 Using a shared key, proxy URLs are encrypted with [hmac](http://en.wikipedia.org/wiki/HMAC) so we can bust caches/ban/rate limit if needed.
 
-CamoDotNet currently runs on OWIN 3.0.
+CamoDotNet currently runs on:
+
+* CamoDotNet 1.x - OWIN 3.0
+* CamoDotNet 2.x - .NET Core
 
 ## Features
 
@@ -38,10 +41,8 @@ The CamoDotNet server is implemented as an OWIN middleware and can be added to a
 
     public class Startup
     {
-        public void Configuration(IAppBuilder app)
+        public void Configuration(IAppBuilder app) // or IApplicationBuilder in .NET Core
         {
-            ServicePointManager.DefaultConnectionLimit = 50;
-
             var camoServerSettings = CamoServerSettings.GetDefault("shared_key_goes_here");
             var camoUrlHelper = new CamoUrlHelper(
                 new CamoSignature(camoServerSettings.SharedKey), "/camo");

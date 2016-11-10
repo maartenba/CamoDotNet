@@ -1,5 +1,6 @@
 // Copyright (c) Maarten Balliauw. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 using CamoDotNet.Core;
 using CamoDotNet.Core.Extensions;
 using CamoDotNet.Extensions;
-using Microsoft.Owin;
+using Microsoft.AspNetCore.Http;
 
 namespace CamoDotNet
 {
@@ -91,7 +92,7 @@ namespace CamoDotNet
             _signature = new CamoSignature(_settings.SharedKey);
         }
 
-        public async Task Invoke(IOwinContext context)
+        public async Task Invoke(HttpContext context)
         {
             // does our path match?
             if (!context.Request.Path.StartsWithSegments(_pathPrefix))
@@ -102,7 +103,7 @@ namespace CamoDotNet
             // check request method
             if (context.Request.Method != "GET")
             {
-                await WriteHead(context, HttpStatusCode.MethodNotAllowed, _defaultHeaders);
+                await WriteHead(context.Response, HttpStatusCode.MethodNotAllowed, _defaultHeaders);
                 return;
             }
 
@@ -112,7 +113,7 @@ namespace CamoDotNet
             {
                 case "/":
                 case "/favicon.ico":
-                    await WriteHead(context, HttpStatusCode.OK, _defaultHeaders);
+                    await WriteHead(context.Response, HttpStatusCode.OK, _defaultHeaders);
                     return;
             }
             
@@ -133,7 +134,7 @@ namespace CamoDotNet
             // validate signature
             if (!_signature.IsValidSignature(url, signature))
             {
-                await WriteInvalidSignature(context, url, signature);
+                await WriteInvalidSignature(context.Response, url, signature);
                 return;
             }
 
@@ -141,7 +142,7 @@ namespace CamoDotNet
             if ((context.Request.Headers.ContainsKey("User-Agent") && context.Request.Headers["User-Agent"] == _settings.UserAgent)
                 || (context.Request.Headers.ContainsKey("Via") && context.Request.Headers["Via"].Contains(_settings.UserAgent)))
             {
-                await WriteHead(context, HttpStatusCode.BadRequest, _defaultHeaders);
+                await WriteHead(context.Response, HttpStatusCode.BadRequest, _defaultHeaders);
                 return;
             }
 
@@ -157,7 +158,7 @@ namespace CamoDotNet
             }
             catch (HttpRequestException)
             {
-                await WriteHead(context, HttpStatusCode.BadRequest, _defaultHeaders);
+                await WriteHead(context.Response, HttpStatusCode.BadRequest, _defaultHeaders);
                 return;
             }
 
@@ -166,7 +167,7 @@ namespace CamoDotNet
                 // validate response
                 if (upstreamResponseStream.Length > _settings.ContentLengthLimit)
                 {
-                    await WriteContentLengthExceeded(context, _defaultHeaders);
+                    await WriteContentLengthExceeded(context.Response, _defaultHeaders);
                     return;
                 }
 
@@ -174,7 +175,7 @@ namespace CamoDotNet
                 if (!_supportedMediaTypes.Any(
                     mt => contentTypes.Any(ct => ct.Equals(mt, StringComparison.OrdinalIgnoreCase))))
                 {
-                    await WriteContentTypeUnsupported(context, upstreamResponse.Content.Headers.ContentType.MediaType, _defaultHeaders);
+                    await WriteContentTypeUnsupported(context.Response, upstreamResponse.Content.Headers.ContentType.MediaType, _defaultHeaders);
                     return;
                 }
 
@@ -191,59 +192,68 @@ namespace CamoDotNet
                 }
                 
                 context.Response.StatusCode = (int) upstreamResponse.StatusCode;
-                await WriteHeaders(context, headers);
+                await WriteHeaders(context.Response, headers);
                 context.Response.ContentType = upstreamResponse.Content.Headers.ContentType.ToString();
 
-                var responseStream = context.Environment["owin.ResponseBody"] as Stream;
-                await upstreamResponseStream.CopyToAsync(responseStream);
+                await upstreamResponseStream.CopyToAsync(context.Response.Body);
             }
         }
 
         private Task TransferHeaders(IHeaderDictionary sourceHeaders, HttpRequestHeaders destinationHeaders)
         {
-            destinationHeaders.Add("Accept", sourceHeaders["Accept"] ?? "image/*");
-            destinationHeaders.Add("Accept-Encoding", sourceHeaders["Accept-Encoding"] ?? string.Empty);
+            destinationHeaders.Add("Accept", sourceHeaders.ContainsKey("Accept")
+                ? sourceHeaders["Accept"].ToString()
+                : "image/*");
+
+            destinationHeaders.Add("Accept-Encoding", sourceHeaders.ContainsKey("Accept-Encoding")
+                ? sourceHeaders["Accept-Encoding"].ToString()
+                : string.Empty);
+
             destinationHeaders.Add("X-Frame-Options", _defaultHeaders["X-Frame-Options"]);
+
             destinationHeaders.Add("X-XSS-Protection", _defaultHeaders["X-XSS-Protection"]);
+
             destinationHeaders.Add("X-Content-Type-Options", _defaultHeaders["X-Content-Type-Options"]);
+
             //destinationHeaders.Add("Content-Security-Policy", _defaultHeaders["Content-Security-Policy"]);
 
             return Task.FromResult(0);
         }
 
-        private Task WriteHeaders(IOwinContext context, Dictionary<string, string> headers)
+        private Task WriteHeaders(HttpResponse response, Dictionary<string, string> headers)
         {
             foreach (var headerPair in headers)
             {
-                context.Response.Headers.Append(headerPair.Key, headerPair.Value);
+                response.Headers.Append(headerPair.Key, headerPair.Value);
             }
+
             return Task.FromResult(0);
         }
 
-        private async Task WriteInvalidSignature(IOwinContext context, string url, string signature)
+        private async Task WriteInvalidSignature(HttpResponse response, string url, string signature)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-            await context.Response.WriteAsync(string.Format("checksum mismatch {0}:{1}", url, signature));
+            response.StatusCode = (int)HttpStatusCode.NotFound;
+            await response.WriteAsync(string.Format("checksum mismatch {0}:{1}", url, signature));
         }
 
-        private async Task WriteContentLengthExceeded(IOwinContext context, Dictionary<string, string> headers)
+        private async Task WriteContentLengthExceeded(HttpResponse response, Dictionary<string, string> headers)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-            await WriteHeaders(context, headers);
-            await context.Response.WriteAsync("Content-Length exceeded");
+            response.StatusCode = (int)HttpStatusCode.NotFound;
+            await WriteHeaders(response, headers);
+            await response.WriteAsync("Content-Length exceeded");
         }
 
-        private async Task WriteContentTypeUnsupported(IOwinContext context, string contentTypeReturned, Dictionary<string, string> headers)
+        private async Task WriteContentTypeUnsupported(HttpResponse response, string contentTypeReturned, Dictionary<string, string> headers)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-            await WriteHeaders(context, headers);
-            await context.Response.WriteAsync(string.Format("Non-Image content-type returned '{0}'", contentTypeReturned));
+            response.StatusCode = (int)HttpStatusCode.NotFound;
+            await WriteHeaders(response, headers);
+            await response.WriteAsync(string.Format("Non-Image content-type returned '{0}'", contentTypeReturned));
         }
 
-        private async Task WriteHead(IOwinContext context, HttpStatusCode statusCode, Dictionary<string, string> headers)
+        private async Task WriteHead(HttpResponse response, HttpStatusCode statusCode, Dictionary<string, string> headers)
         {
-            context.Response.StatusCode = (int)statusCode;
-            await WriteHeaders(context, headers);
+            response.StatusCode = (int)statusCode;
+            await WriteHeaders(response, headers);
         }
     }
 }

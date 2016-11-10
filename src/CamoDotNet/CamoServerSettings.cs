@@ -1,5 +1,6 @@
 // Copyright (c) Maarten Balliauw. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
 using System.Security.Cryptography;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace CamoDotNet
 {
     public class CamoServerSettings
     {
-        private const string DefaultUserAgent = "CamoDotNet Asset Proxy/1.0.0";
+        private const string DefaultUserAgent = "CamoDotNet Asset Proxy/2.0.0";
 
         public HMAC SharedKey { get; private set; }
         public string UserAgent { get; set; }
@@ -22,7 +23,10 @@ namespace CamoDotNet
 
         public static CamoServerSettings GetDefault(string sharedKey)
         {
-            return new CamoServerSettings(new HMACSHA256(Encoding.ASCII.GetBytes(sharedKey)), DefaultUserAgent, 5242880);
+            return new CamoServerSettings(
+                new HMACSHA256(Encoding.ASCII.GetBytes(sharedKey)),
+                DefaultUserAgent,
+                5242880);
         }
     }
 }

@@ -1,5 +1,6 @@
 // Copyright (c) Maarten Balliauw. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.HttpClient.GetAsync("/74657374/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f4e754765742f486f6d652f6465762f7265736f75726365732f6e756765742e706e67");
+                HttpResponseMessage response = await server.CreateClient().GetAsync("/74657374/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f4e754765742f486f6d652f6465762f7265736f75726365732f6e756765742e706e67");
 
                 Assert.Contains("checksum mismatch", await response.Content.ReadAsStringAsync());
                 Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -27,7 +28,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.HttpClient.GetAsync("/74657374?url=http%3A%2F%2Fwww.nuget.org%2Ftest");
+                HttpResponseMessage response = await server.CreateClient().GetAsync("/74657374?url=http%3A%2F%2Fwww.nuget.org%2Ftest");
 
                 Assert.Contains("checksum mismatch", await response.Content.ReadAsStringAsync());
                 Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -42,7 +43,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.HttpClient.PostAsync("/", new StringContent("data"));
+                HttpResponseMessage response = await server.CreateClient().PostAsync("/", new StringContent("data"));
 
                 Assert.Equal(HttpStatusCode.MethodNotAllowed, response.StatusCode);
             }
@@ -53,7 +54,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.HttpClient.GetAsync("/");
+                HttpResponseMessage response = await server.CreateClient().GetAsync("/");
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
@@ -64,7 +65,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.HttpClient.GetAsync("/favicon.ico");
+                HttpResponseMessage response = await server.CreateClient().GetAsync("/favicon.ico");
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }

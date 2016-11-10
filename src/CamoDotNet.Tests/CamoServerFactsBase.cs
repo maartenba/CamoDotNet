@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Maarten Balliauw. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
 using System;
-using System.Net;
 using System.Net.Http;
 using CamoDotNet.Core;
-using Microsoft.Owin.Testing;
-using Owin;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 
 namespace CamoDotNet.Tests
 {
@@ -15,7 +16,8 @@ namespace CamoDotNet.Tests
 
         protected virtual TestServer CreateServer()
         {
-            return TestServer.Create<TestStartup>();
+            return new TestServer(new WebHostBuilder()
+                .UseStartup<TestStartup>());
         }
 
         protected string GenerateSignedUrl(string url)
@@ -30,10 +32,8 @@ namespace CamoDotNet.Tests
         private class TestStartup
         {
             // ReSharper disable once UnusedMember.Local
-            public void Configuration(IAppBuilder app)
+            public void Configure(IApplicationBuilder app)
             {
-                ServicePointManager.DefaultConnectionLimit = 50;
-                
                 app.UseCamoServer(
                     CamoServerSettings.GetDefault(SharedKeyForTests),
                     new HttpClient { Timeout = TimeSpan.FromSeconds(10) });

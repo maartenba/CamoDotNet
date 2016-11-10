@@ -5,29 +5,37 @@ if "%config%" == "" (
 )
 
 set version=
-if not "%PackageVersion%" == "" (
-   set version=-Version %PackageVersion%
+if not "%BuildCounter%" == "" (
+   set version=--version-suffix ci-%BuildCounter%
 )
 
-REM Package restore
-tools\nuget.exe restore src\CamoDotNet.sln -OutputDirectory %cd%\src\packages -NonInteractive
+REM (optional) build.bat is in the root of our repo, cd to the correct folder where sources/projects are
+cd src
+
+REM Restore
+call dotnet restore
+if not "%errorlevel%"=="0" goto failure
 
 REM Build
-"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild" src\CamoDotNet.sln /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=Normal /nr:false
+REM - Option 1: Run dotnet build for every source folder in the project
+REM   e.g. call dotnet build <path> --configuration %config%
+REM - Option 2: Let msbuild handle things and build the solution
+"%programfiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" CamoDotNet.sln /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=Normal /nr:false
+REM call dotnet build --configuration %config%
+if not "%errorlevel%"=="0" goto failure
 
-REM Test
-tools\nuget.exe install xunit.runner.console -Version 2.0.0 -OutputDirectory src\packages
-src\packages\xunit.runner.console.2.0.0\tools\xunit.console.exe src\CamoDotNet.Tests\bin\%config%\CamoDotNet.Tests.dll
+REM Unit tests
+call dotnet test CamoDotNet.Tests --configuration %config%
+if not "%errorlevel%"=="0" goto failure
 
 REM Package
-mkdir artifacts
-mkdir artifacts\nuget
-tools\nuget.exe pack "src\CamoDotNet\CamoDotNet.csproj" -symbols -o artifacts\nuget -p Configuration=%config% %version%
-tools\nuget.exe pack "src\CamoDotNet.Core\CamoDotNet.Core.csproj" -symbols -o artifacts\nuget -p Configuration=%config% %version%
+mkdir %cd%\..\artifacts
+call dotnet pack CamoDotNet --configuration %config% %version% --output ..\artifacts
+call dotnet pack CamoDotNet.Core --configuration %config% %version% --output ..\artifacts
+if not "%errorlevel%"=="0" goto failure
 
-REM Plain assemblies
-mkdir artifacts\assemblies
-copy src\CamoDotNet\bin\%config%\Camo*.dll artifacts\assemblies
-copy src\CamoDotNet\bin\%config%\Camo*.pdb artifacts\assemblies
-copy src\CamoDotNet.Core\bin\%config%\Camo*.dll artifacts\assemblies
-copy src\CamoDotNet.Core\bin\%config%\Camo*.pdb artifacts\assemblies
+:success
+exit 0
+
+:failure
+exit -1
