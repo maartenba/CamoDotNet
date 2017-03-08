@@ -1,17 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CamoDotNet.Core", "CamoDotNet.Core\CamoDotNet.Core.xproj", "{A21C940A-B9FD-4429-A006-CEFC1A3AFB55}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CamoDotNet", "CamoDotNet\CamoDotNet.xproj", "{B838049F-4D0D-4229-AAD6-8667805D5CE8}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CamoDotNet.Sample", "CamoDotNet.Sample\CamoDotNet.Sample.xproj", "{DC140795-C99E-4ADD-88BB-1702453DAF7E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CamoDotNet.Tests", "CamoDotNet.Tests\CamoDotNet.Tests.xproj", "{3EF5B812-9C88-436C-8DFD-BC33B5F5DAD9}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{9FACA9B0-02DE-4B54-99F7-100DCAD05903}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet.Core", "CamoDotNet.Core\CamoDotNet.Core.csproj", "{A21C940A-B9FD-4429-A006-CEFC1A3AFB55}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet", "CamoDotNet\CamoDotNet.csproj", "{B838049F-4D0D-4229-AAD6-8667805D5CE8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet.Sample", "CamoDotNet.Sample\CamoDotNet.Sample.csproj", "{DC140795-C99E-4ADD-88BB-1702453DAF7E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet.Tests", "CamoDotNet.Tests\CamoDotNet.Tests.csproj", "{3EF5B812-9C88-436C-8DFD-BC33B5F5DAD9}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
