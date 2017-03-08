@@ -7,6 +7,8 @@ if "%config%" == "" (
 set version=
 if not "%PackageVersion%" == "" (
    set version=%PackageVersion%
+) else (
+   set version=1.0.0.0
 )
 
 if "%msbuild%" == "" (
@@ -46,8 +48,8 @@ REMif not "%errorlevel%"=="0" goto failure
 
 REM Package
 mkdir %cd%\..\artifacts
-call dotnet pack CamoDotNet --configuration %config% %version% --output ..\artifacts
-call dotnet pack CamoDotNet.Core --configuration %config% %version% --output ..\artifacts
+call dotnet pack CamoDotNet --configuration %config% -Version %version% --output ..\artifacts
+call dotnet pack CamoDotNet.Core --configuration %config% -Version %version% --output ..\artifacts
 if not "%errorlevel%"=="0" goto failure
 
 :success
