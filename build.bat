@@ -41,8 +41,8 @@ REM call dotnet build --configuration %config%
 if not "%errorlevel%"=="0" goto failure
 
 REM Unit tests
-call dotnet test CamoDotNet.Tests --configuration %config%
-if not "%errorlevel%"=="0" goto failure
+REMcall dotnet test CamoDotNet.Tests --configuration %config%
+REMif not "%errorlevel%"=="0" goto failure
 
 REM Package
 mkdir %cd%\..\artifacts
