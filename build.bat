@@ -1,4 +1,4 @@
-#@echo Off
+@echo Off
 set config=%1
 if "%config%" == "" (
     set config=Release
@@ -48,8 +48,8 @@ REMif not "%errorlevel%"=="0" goto failure
 
 REM Package
 mkdir %cd%\..\artifacts
-call dotnet pack CamoDotNet --configuration %config% -Version %version% --output ..\artifacts
-call dotnet pack CamoDotNet.Core --configuration %config% -Version %version% --output ..\artifacts
+call dotnet pack CamoDotNet --configuration %config% --version %version% --output ..\artifacts
+call dotnet pack CamoDotNet.Core --configuration %config% --version %version% --output ..\artifacts
 if not "%errorlevel%"=="0" goto failure
 
 :success
