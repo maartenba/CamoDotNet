@@ -20,7 +20,7 @@ if [%msbuild%] == [] (
         set msbuild="%programfiles(x86)%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
     )
 )
-if not exist %msbuild% (
+if [%msbuild%] == [] (
     echo Could not find suitable msbuild version
 	goto failure
 )
