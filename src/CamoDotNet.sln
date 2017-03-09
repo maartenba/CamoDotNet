@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{9FACA9B0-02DE-4B54-99F7-100DCAD05903}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet.Core", "CamoDotNet.Core\CamoDotNet.Core.csproj", "{A21C940A-B9FD-4429-A006-CEFC1A3AFB55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet", "CamoDotNet\CamoDotNet.csproj", "{B838049F-4D0D-4229-AAD6-8667805D5CE8}"
