@@ -22,7 +22,6 @@ if exist "%programfiles(x86)%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15
 REM (optional) build.bat is in the root of our repo, cd to the correct folder where sources/projects are
 cd src
 
-echo Hello %testmaarten%
 REM Restore
 call dotnet restore
 if not "%errorlevel%"=="0" goto failure
