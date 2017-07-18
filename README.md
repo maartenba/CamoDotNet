@@ -74,3 +74,5 @@ CamoDotNet comes with several configuration options which can be specified as a 
 * `SharedKey`: The shared key used to generate the HMAC digest.
 * `UserAgent`: The string for Camo to include in the `Via` and `User-Agent` headers it sends in requests to origin servers. (default: `CamoDotNet Asset Proxy/1.0`)
 * `ContentLengthLimit`: The maximum `Content-Length` Camo will proxy. (default: 5242880)
+
+
