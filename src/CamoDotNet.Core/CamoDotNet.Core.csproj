@@ -13,7 +13,7 @@
     <PackageTags>CamoDotNet;https;ssl;image proxy</PackageTags>
     <PackageProjectUrl>http://github.com/maartenba/CamoDotNet</PackageProjectUrl>
     <PackageLicenseUrl>http://github.com/maartenba/CamoDotNet</PackageLicenseUrl>
-    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
