@@ -6,14 +6,13 @@
     <AssemblyTitle>CamoDotNet.Core</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>Maarten Balliauw</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>CamoDotNet.Core</AssemblyName>
     <PackageId>CamoDotNet.Core</PackageId>
     <PackageTags>CamoDotNet;https;ssl;image proxy</PackageTags>
     <PackageProjectUrl>http://github.com/maartenba/CamoDotNet</PackageProjectUrl>
     <PackageLicenseUrl>http://github.com/maartenba/CamoDotNet</PackageLicenseUrl>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -171,17 +170,21 @@ namespace CamoDotNet
                     return;
                 }
 
-                var contentTypes = upstreamResponse.Content.Headers.ContentType.MediaType.Split(new [] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-                if (!_supportedMediaTypes.Any(
+                var contentTypes = upstreamResponse.Content.Headers.ContentType != null
+                    ? upstreamResponse.Content.Headers.ContentType.MediaType.Split(new [] { ";" }, StringSplitOptions.RemoveEmptyEntries)
+                    : new string[0];
+                if (contentTypes.Length == 0 || !_supportedMediaTypes.Any(
                     mt => contentTypes.Any(ct => ct.Equals(mt, StringComparison.OrdinalIgnoreCase))))
                 {
-                    await WriteContentTypeUnsupported(context.Response, upstreamResponse.Content.Headers.ContentType.MediaType, _defaultHeaders);
+                    await WriteContentTypeUnsupported(context.Response, upstreamResponse.Content.Headers.ContentType?.MediaType, _defaultHeaders);
                     return;
                 }
 
                 // stream response
-                var headers = new Dictionary<string, string>(_defaultHeaders);
-                headers.Add("Via", "1.1 camo (" + _settings.UserAgent + ")");
+                var headers = new Dictionary<string, string>(_defaultHeaders)
+                {
+                    { "Via", "1.1 camo (" + _settings.UserAgent + ")" }
+                };
                 if (upstreamResponse.Headers.ETag != null)
                 {
                     headers.Add("Etag", upstreamResponse.Headers.ETag.ToString());
@@ -247,7 +250,7 @@ namespace CamoDotNet
         {
             response.StatusCode = (int)HttpStatusCode.NotFound;
             await WriteHeaders(response, headers);
-            await response.WriteAsync(string.Format("Non-Image content-type returned '{0}'", contentTypeReturned));
+            await response.WriteAsync(string.Format("Non-Image content-type returned '{0}'", contentTypeReturned ?? "unspecified"));
         }
 
         private async Task WriteHead(HttpResponse response, HttpStatusCode statusCode, Dictionary<string, string> headers)

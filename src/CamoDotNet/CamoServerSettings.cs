@@ -8,11 +8,11 @@ namespace CamoDotNet
 {
     public class CamoServerSettings
     {
-        private const string DefaultUserAgent = "CamoDotNet Asset Proxy/2.0.0";
+        private const string DefaultUserAgent = "CamoDotNet Asset Proxy/3.0.0";
 
-        public HMAC SharedKey { get; private set; }
+        public HMAC SharedKey { get; }
         public string UserAgent { get; set; }
-        public int ContentLengthLimit { get; private set; }
+        public int ContentLengthLimit { get; }
 
         public CamoServerSettings(HMACSHA256 sharedKey, string userAgent, int contentLengthLimit)
         {
