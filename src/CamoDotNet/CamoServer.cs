@@ -220,7 +220,7 @@ namespace CamoDotNet
 
             //destinationHeaders.Add("Content-Security-Policy", _defaultHeaders["Content-Security-Policy"]);
 
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
 
         private Task WriteHeaders(HttpResponse response, Dictionary<string, string> headers)
@@ -230,7 +230,7 @@ namespace CamoDotNet
                 response.Headers.Append(headerPair.Key, headerPair.Value);
             }
 
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
 
         private async Task WriteInvalidSignature(HttpResponse response, string url, string signature)

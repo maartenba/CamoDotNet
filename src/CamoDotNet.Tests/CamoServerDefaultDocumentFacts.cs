@@ -16,7 +16,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.CreateClient().GetAsync("/74657374/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f4e754765742f486f6d652f6465762f7265736f75726365732f6e756765742e706e67");
+                var response = await server.CreateClient().GetAsync("/74657374/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f4e754765742f486f6d652f6465762f7265736f75726365732f6e756765742e706e67");
 
                 Assert.Contains("checksum mismatch", await response.Content.ReadAsStringAsync());
                 Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
