@@ -4,7 +4,7 @@
     <Description>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains client-side code.</Description>
     <Copyright>Copyright Maarten Balliauw</Copyright>
     <AssemblyTitle>CamoDotNet.Core</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>Maarten Balliauw</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <DebugType>portable</DebugType>

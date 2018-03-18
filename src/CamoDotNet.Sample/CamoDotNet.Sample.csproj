@@ -6,7 +6,6 @@
     <AssemblyName>CamoDotNet.Sample</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>CamoDotNet.Sample</PackageId>
-    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
