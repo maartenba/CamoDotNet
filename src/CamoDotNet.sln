@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet.Sample", "CamoDo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamoDotNet.Tests", "CamoDotNet.Tests\CamoDotNet.Tests.csproj", "{3EF5B812-9C88-436C-8DFD-BC33B5F5DAD9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{8228B746-A658-471D-A7AD-B3DA16F13863}"
+ProjectSection(SolutionItems) = preProject
+	Directory.Build.targets = Directory.Build.targets
+	global.json = global.json
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

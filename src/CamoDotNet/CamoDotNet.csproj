@@ -1,28 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains server-side code.</Description>
-    <Copyright>Copyright Maarten Balliauw</Copyright>
-    <AssemblyTitle>CamoDotNet</AssemblyTitle>
-    <VersionPrefix>3.0.0</VersionPrefix>
-    <Authors>Maarten Balliauw</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <DebugType>portable</DebugType>
-    <AssemblyName>CamoDotNet</AssemblyName>
-    <PackageId>CamoDotNet</PackageId>
-    <PackageTags>CamoDotNet;https;ssl;image proxy</PackageTags>
-    <PackageProjectUrl>http://github.com/maartenba/CamoDotNet</PackageProjectUrl>
-    <PackageLicenseUrl>http://github.com/maartenba/CamoDotNet</PackageLicenseUrl>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
+    <Description>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains server-side code.</Description>
+    <PackageTags>CamoDotNet;https;ssl;image proxy</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.2" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
