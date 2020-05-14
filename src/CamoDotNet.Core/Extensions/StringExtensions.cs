@@ -21,7 +21,7 @@ namespace CamoDotNet.Core.Extensions
         public static string ToHex(this string from)
         {
             var result = "";
-            foreach (char c in from)
+            foreach (var c in from)
             {
                 int tmp = c;
                 result += string.Format("{0:X2}", Convert.ToUInt32(tmp.ToString()));

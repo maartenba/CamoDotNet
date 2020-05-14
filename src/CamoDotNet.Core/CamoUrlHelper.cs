@@ -18,7 +18,10 @@ namespace CamoDotNet.Core
 
         public string GenerateUrl(string originalUrl)
         {
-            return string.Format("{0}/{1}/{2}", _serverUrl.TrimEnd('/'), _signature.GenerateSignature(originalUrl), originalUrl.ToHex());
+            return string.Format("{0}/{1}/{2}", 
+                _serverUrl.TrimEnd('/'), 
+                _signature.GenerateSignature(originalUrl), 
+                originalUrl.ToHex());
         }
     }
 }
