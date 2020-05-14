@@ -13,6 +13,7 @@ CamoDotNet currently runs on:
 * CamoDotNet 1.x - OWIN 3.0
 * CamoDotNet 2.x - .NET Core
 * CamoDotNet 3.x - .NET Standard 2.0
+* CamoDotNet 4.x - .NET Core 3.1
 
 ## Features
 
