@@ -5,7 +5,15 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Description>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains server-side code.</Description>
     <PackageTags>CamoDotNet;https;ssl;image proxy</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\CamoDotNet.Core\CamoDotNet.Core.csproj" />
