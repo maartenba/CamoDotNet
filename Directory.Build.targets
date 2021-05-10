@@ -4,15 +4,17 @@
         <Nullable>disable</Nullable>
 
         <!-- NuGet -->
+        <PackageIcon>package_icon.png</PackageIcon>
         <IncludeSymbols>True</IncludeSymbols>
         <IncludeSource>True</IncludeSource>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
         <Authors>Maarten Balliauw</Authors>
         <Copyright>Maarten Balliauw</Copyright>
-        <Version>4.0.1</Version>
-        <VersionPrefix>4.0.1</VersionPrefix>
+        <Version>4.1.0</Version>
+        <VersionPrefix>4.1.0</VersionPrefix>
         <Authors>Maarten Balliauw</Authors>
         <DebugType>portable</DebugType>
         <PackageProjectUrl>https://github.com/maartenba/CamoDotNet</PackageProjectUrl>
@@ -22,4 +24,11 @@
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <Product>CamoDotNet</Product>
     </PropertyGroup>
+
+    <ItemGroup Condition="$(GeneratePackageOnBuild)">
+        <None Include="../../package_icon.png">
+            <Pack>true</Pack>
+            <PackagePath>/</PackagePath>
+        </None>
+    </ItemGroup>
 </Project>

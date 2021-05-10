@@ -4,6 +4,7 @@
 using System;
 using System.Net.Http;
 using CamoDotNet.Core;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,12 @@ namespace CamoDotNet.Sample
 {
     public class Startup
     {
+        [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
         }
 
+        [UsedImplicitly]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
