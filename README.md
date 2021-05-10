@@ -1,7 +1,5 @@
 # CamoDotNet
 
-[![camodotnet MyGet Build Status](https://www.myget.org/BuildSource/Badge/camodotnet?identifier=a77cc447-f06b-4b02-a268-3ef77ec84f02)](https://www.myget.org/)
-
 CamoDotNet is a .NET port of [camo](https://github.com/atmos/camo). It is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages.
 
 [Check the GitHub blog](https://github.com/blog/743-sidejack-prevention-phase-3-ssl-proxied-assets) for background on why camo exists.
