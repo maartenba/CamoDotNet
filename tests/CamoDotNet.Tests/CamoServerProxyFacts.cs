@@ -16,7 +16,7 @@ namespace CamoDotNet.Tests
         {
             using (var server = CreateServer())
             {
-                HttpResponseMessage response = await server.CreateClient().GetAsync(GenerateSignedUrl("https://raw.githubusercontent.com/NuGet/Home/dev/resources/nuget.png"));
+                HttpResponseMessage response = await server.CreateClient().GetAsync(GenerateSignedUrl("https://raw.githubusercontent.com/NuGet/Home/dev/meta/resources/nuget.png"));
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.IsType<StreamContent>(response.Content);

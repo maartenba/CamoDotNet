@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{8228B746-A658-47
 ProjectSection(SolutionItems) = preProject
 	Directory.Build.targets = Directory.Build.targets
 	global.json = global.json
+	package_icon.png = package_icon.png
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7A1F3EAD-8EB8-446A-85AF-1958ACF40C76}"
@@ -26,12 +27,16 @@ ProjectSection(SolutionItems) = preProject
 	.config\dotnet-tools.json = .config\dotnet-tools.json
 EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{526A9D9A-11E4-421F-8EE3-F3489AF2CBFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{526A9D9A-11E4-421F-8EE3-F3489AF2CBFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{526A9D9A-11E4-421F-8EE3-F3489AF2CBFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A21C940A-B9FD-4429-A006-CEFC1A3AFB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A21C940A-B9FD-4429-A006-CEFC1A3AFB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A21C940A-B9FD-4429-A006-CEFC1A3AFB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,5 +63,6 @@ Global
 		{DC140795-C99E-4ADD-88BB-1702453DAF7E} = {7A1F3EAD-8EB8-446A-85AF-1958ACF40C76}
 		{3EF5B812-9C88-436C-8DFD-BC33B5F5DAD9} = {5E2C75FD-F1E9-4CE4-AED4-21957691F09F}
 		{C4E252F2-5FA6-45BB-B9E6-E9956B6B307F} = {8228B746-A658-471D-A7AD-B3DA16F13863}
+		{526A9D9A-11E4-421F-8EE3-F3489AF2CBFF} = {8228B746-A658-471D-A7AD-B3DA16F13863}
 	EndGlobalSection
 EndGlobal
