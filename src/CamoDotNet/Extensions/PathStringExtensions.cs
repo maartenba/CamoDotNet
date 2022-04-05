@@ -8,7 +8,7 @@ namespace CamoDotNet.Extensions;
 public static class PathStringExtensions
 {
     public static PathString RemovePrefix(this PathString current, PathString prefix) 
-        => prefix.HasValue 
+        => current.HasValue && prefix.HasValue
             ? new PathString(current.Value.Substring(prefix.Value.Length)) 
             : current;
 }

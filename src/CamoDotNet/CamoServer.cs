@@ -119,7 +119,7 @@ public class CamoServer
         }
             
         // parse parameters
-        var parameters = requestPath.Value.TrimStart('/').Split(new [] { '/' }, 2);
+        var parameters = requestPath.Value!.TrimStart('/').Split(new [] { '/' }, 2);
 
         string url;
         var signature = parameters[0];
@@ -173,7 +173,7 @@ public class CamoServer
         }
 
         var contentTypes = upstreamResponse.Content.Headers.ContentType != null
-            ? upstreamResponse.Content.Headers.ContentType.MediaType.Split(new [] { ";" }, StringSplitOptions.RemoveEmptyEntries)
+            ? upstreamResponse.Content.Headers.ContentType.MediaType?.Split(new [] { ";" }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>()
             : Array.Empty<string>();
         if (contentTypes.Length == 0 || !_supportedMediaTypes.Any(
                 mt => contentTypes.Any(ct => ct.Equals(mt, StringComparison.OrdinalIgnoreCase))))
@@ -193,12 +193,12 @@ public class CamoServer
         }
         if (upstreamResponse.Content.Headers.LastModified.HasValue)
         {
-            headers.Add("last-modified", upstreamResponse.Content.Headers.LastModified.ToString());
+            headers.Add("last-modified", upstreamResponse.Content.Headers.LastModified.ToString()!);
         }
                 
         context.Response.StatusCode = (int) upstreamResponse.StatusCode;
         await WriteHeaders(context.Response, headers);
-        context.Response.ContentType = upstreamResponse.Content.Headers.ContentType.ToString();
+        context.Response.ContentType = upstreamResponse.Content.Headers.ContentType!.ToString();
 
         await upstreamResponseStream.CopyToAsync(context.Response.Body);
     }
@@ -247,7 +247,7 @@ public class CamoServer
         await response.WriteAsync("Content-Length exceeded");
     }
 
-    private static async Task WriteContentTypeUnsupported(HttpResponse response, string contentTypeReturned, Dictionary<string, string> headers)
+    private static async Task WriteContentTypeUnsupported(HttpResponse response, string? contentTypeReturned, Dictionary<string, string> headers)
     {
         response.StatusCode = (int)HttpStatusCode.NotFound;
         await WriteHeaders(response, headers);
