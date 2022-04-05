@@ -27,7 +27,7 @@ public class CamoServerProxyFacts
         using var server = CreateServer();
         var response = await server.CreateClient().GetAsync(GenerateSignedUrl("https://www.github.com"));
 
-        Assert.Contains("Non-Image content-type returned", await response.Content.ReadAsStringAsync());
+        Assert.Contains("Non-image content-type returned", await response.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
