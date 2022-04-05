@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>CamoDotNet is all about making insecure assets look secure. This is an SSL image proxy to prevent mixed content warnings on secure pages. Package contains server-side code.</Description>
     <PackageTags>CamoDotNet;https;ssl;image proxy</PackageTags>

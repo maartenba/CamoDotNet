@@ -8,36 +8,37 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 
-namespace CamoDotNet.Tests
+namespace CamoDotNet.Tests;
+
+public abstract class CamoServerFactsBase
 {
-    public abstract class CamoServerFactsBase
+    private const string SharedKeyForTests = "TEST1234";
+
+    // ReSharper disable once MemberCanBeMadeStatic.Global
+    protected TestServer CreateServer()
     {
-        private const string SharedKeyForTests = "TEST1234";
+        return new TestServer(new WebHostBuilder()
+            .UseStartup<TestStartup>());
+    }
 
-        protected virtual TestServer CreateServer()
+    // ReSharper disable once MemberCanBeMadeStatic.Global
+    protected string GenerateSignedUrl(string url)
+    {
+        var helper = new CamoUrlHelper(new CamoSignature(
+            CamoServerSettings.GetDefault(SharedKeyForTests).SharedKey), "");
+
+        return helper.GenerateUrl(url);
+    }
+
+    // ReSharper disable once ClassNeverInstantiated.Local
+    private class TestStartup
+    {
+        // ReSharper disable once UnusedMember.Local
+        public void Configure(IApplicationBuilder app)
         {
-            return new TestServer(new WebHostBuilder()
-                .UseStartup<TestStartup>());
-        }
-
-        protected string GenerateSignedUrl(string url)
-        {
-            var helper = new CamoUrlHelper(new CamoSignature(
-                CamoServerSettings.GetDefault(SharedKeyForTests).SharedKey), "");
-
-            return helper.GenerateUrl(url);
-        }
-
-        // ReSharper disable once ClassNeverInstantiated.Local
-        private class TestStartup
-        {
-            // ReSharper disable once UnusedMember.Local
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseCamoServer(
-                    CamoServerSettings.GetDefault(SharedKeyForTests),
-                    new HttpClient { Timeout = TimeSpan.FromSeconds(10) });
-            }
+            app.UseCamoServer(
+                CamoServerSettings.GetDefault(SharedKeyForTests),
+                new HttpClient { Timeout = TimeSpan.FromSeconds(10) });
         }
     }
 }

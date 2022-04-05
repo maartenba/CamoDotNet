@@ -3,17 +3,12 @@
 
 using Microsoft.AspNetCore.Http;
 
-namespace CamoDotNet.Extensions
+namespace CamoDotNet.Extensions;
+
+public static class PathStringExtensions
 {
-    public static class PathStringExtensions
-    {
-        public static PathString RemovePrefix(this PathString current, PathString prefix)
-        {
-            if (prefix.HasValue)
-            {
-                return new PathString(current.Value.Substring(prefix.Value.Length));
-            }
-            return current;
-        }
-    }
+    public static PathString RemovePrefix(this PathString current, PathString prefix) 
+        => prefix.HasValue 
+            ? new PathString(current.Value.Substring(prefix.Value.Length)) 
+            : current;
 }

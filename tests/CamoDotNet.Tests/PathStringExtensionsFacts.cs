@@ -5,18 +5,17 @@ using Microsoft.AspNetCore.Http;
 using CamoDotNet.Extensions;
 using Xunit;
 
-namespace CamoDotNet.Tests
-{
-    public class PathStringExtensionsFacts
-    {
-        [Theory]
-        [InlineData("/foo/bar/baz", "/foo", "/bar/baz")]
-        [InlineData("/foo/bar/baz", "/foo/bar", "/baz")]
-        public void RemovesPathPrefixFromPathString(string current, string prefix, string expected)
-        {
-            var result = new PathString(current).RemovePrefix(new PathString(prefix));
+namespace CamoDotNet.Tests;
 
-            Assert.Equal(expected, result.Value);
-        }
+public class PathStringExtensionsFacts
+{
+    [Theory]
+    [InlineData("/foo/bar/baz", "/foo", "/bar/baz")]
+    [InlineData("/foo/bar/baz", "/foo/bar", "/baz")]
+    public void RemovesPathPrefixFromPathString(string current, string prefix, string expected)
+    {
+        var result = new PathString(current).RemovePrefix(new PathString(prefix));
+
+        Assert.Equal(expected, result.Value);
     }
 }

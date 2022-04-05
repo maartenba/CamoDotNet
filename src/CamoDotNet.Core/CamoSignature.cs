@@ -5,28 +5,27 @@ using System.Security.Cryptography;
 using System.Text;
 using CamoDotNet.Core.Extensions;
 
-namespace CamoDotNet.Core
+namespace CamoDotNet.Core;
+
+public class CamoSignature
 {
-    public class CamoSignature
+    private readonly HMAC _hmac;
+
+    public CamoSignature(HMAC hmac)
     {
-        private readonly HMAC _hmac;
+        _hmac = hmac;
+        _hmac.Initialize();
+    }
 
-        public CamoSignature(HMAC hmac)
-        {
-            _hmac = hmac;
-            _hmac.Initialize();
-        }
+    public bool IsValidSignature(string url, string signature)
+    {
+        return signature == GenerateSignature(url);
+    }
 
-        public bool IsValidSignature(string url, string signature)
-        {
-            return signature == GenerateSignature(url);
-        }
-
-        public string GenerateSignature(string stringToSign)
-        {
-            return Encoding.ASCII.GetString(
-                    _hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign)))
-                .ToHex();
-        }
+    public string GenerateSignature(string stringToSign)
+    {
+        return Encoding.ASCII.GetString(
+                _hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign)))
+            .ToHex();
     }
 }
